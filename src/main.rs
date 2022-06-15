@@ -6,9 +6,9 @@ use std::io;
 
 fn main() {
     loop {
-        println!("Select Gamemode");
-        println!("1: Guessing Game!");
-        println!("2: Hit and brow!");
+        println!("[Select Gamemode]");
+        println!("1: Guessing Game");
+        println!("2: Hit and brow");
 
         let mut guess = String::new();
 
@@ -36,7 +36,7 @@ fn guessing_game() {
 
     // println!("The secret number is: {}",secret_number);  
     loop {
-        println!("Please input your guess.");
+        println!("Please input your guess. (0 ~ 100)");
 
         let mut guess = String::new();
 
@@ -62,15 +62,17 @@ fn guessing_game() {
     }
 }
 fn hit_brow () {
+    // Answer
     let mut ans = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     let mut rng = thread_rng();
     ans.shuffle(&mut rng);
     let ans = &ans[0..4];
     // println!("{:?}",ans);
-
+    let mut score = 0;
     println!("Hit and brow");
-    println!("Please input your guess.");
+    println!("Please input your guess. (0～9)");
     println!("example: 4 0 9 2");
+    
     loop{
         let mut guess = String::new();
 
@@ -84,20 +86,22 @@ fn hit_brow () {
             println!("Please imitate the example.");
             continue;
         }
+        score += 1;
         let mut res: [&str; 4] = [""; 4];
         for i in 0..guess.len() {
             if guess[i] == ans[i] {
                 res[i] = "◎ ";
-            } else if ans.iter().any(|&r| r == guess[i]) {
+            } else if ans.iter().any(|&a| a == guess[i]) {
                 res[i] = "△ ";
             } else {
-                res[i] = "✕";
+                res[i] = "✕ ";
             }
         }
+        println!("{:?}", &res);
         if res.iter().all(|&r| r == "◎ ") {
             println!("You win!!");
+            println!("Your score is {} point\n", score);
             break;
         }
-        println!("{:?}", &res);
     }
 }
